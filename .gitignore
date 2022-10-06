@@ -1,0 +1,42 @@
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+coverage/
+.coverage/
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore config files
+jsconfig.json
+
+# VSCode files
+.vscode
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# Intellij files
+.idea
+
+# Temporary folder
+/tmp
+
+# Log files
+nodeserver.log
+
+# Cache
+.eslintcache
