@@ -25,7 +25,7 @@ yarn-error.log*
 jsconfig.json
 
 # VSCode files
-.vscode
+.vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
 
