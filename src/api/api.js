@@ -1,7 +1,8 @@
 const Koa = require("koa");
 const parser = require("koa-bodyparser");
 const cors = require("@koa/cors");
-const router = require("./router");
+const indexRouter = require("./indexRouter");
+const gamesRouter = require("./gamesRouter");
 const api = new Koa();
 
 api
@@ -21,7 +22,10 @@ api
   .on("error", (err, ctx) => {
     console.error("server error", err, ctx);
   })
-  .use(router.routes());
+  .use(indexRouter.routes())
+  .use(indexRouter.allowedMethods())
+  .use(gamesRouter.routes())
+  .use(gamesRouter.allowedMethods());
 
 // add swagger ui koa
 

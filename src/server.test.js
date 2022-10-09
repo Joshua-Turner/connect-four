@@ -16,17 +16,17 @@ const exampleGame = {
   player2Name: "Yellowanna",
 };
 
-describe("GET /", () => {
+describe("GET /games", () => {
   it("Should return empty array if no games in database", async () => {
-    const res = await req.get("/");
+    const res = await req.get("/games");
     expect(res.body).toEqual([]);
     expect(res.statusCode).toBe(200);
   });
 });
 
-describe("POST /", () => {
+describe("POST /games", () => {
   it("Should return created game", async () => {
-    const res = await req.post("/").send({ ...exampleGame });
+    const res = await req.post("/games").send({ ...exampleGame });
     expect(res.body.message).toBe("Game Created!");
     expect(res.body.game.player1Name).toBe(exampleGame.player1Name);
     expect(res.statusCode).toBe(201);
