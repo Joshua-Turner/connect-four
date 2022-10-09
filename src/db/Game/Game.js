@@ -8,23 +8,18 @@ const gameSchema = new mongoose.Schema({
   },
   player1Name: {
     type: String,
-    required: true,
     trim: true,
-    validate: {
-      validator: function (v) {
-        return typeof v === "string";
-      },
-      message: (props) => `${props.value} is not a valid name`,
-    },
+    default: "Red",
   },
   player2Name: {
     type: String,
-    required: true,
     trim: true,
+    default: "Yellow",
   },
   currentPlayerIndex: {
     type: Number,
     required: true,
+    default: 0,
   },
   lastTurnColumnIndex: {
     type: Number,
@@ -37,7 +32,7 @@ const gameSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    minLength: 0,
+    default: "[]",
   },
 });
 
