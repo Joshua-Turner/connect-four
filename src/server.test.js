@@ -1,5 +1,12 @@
+const {
+  getConsoleLogMocks,
+  restoreMockConsoleLogs,
+} = require("./utils/tests/mock");
 const { db, req } = require("./utils/tests/server");
+
+let consoleLogMocks;
 beforeAll(async () => {
+  consoleLogMocks = getConsoleLogMocks();
   await db.connect();
 });
 
@@ -9,6 +16,7 @@ afterEach(async () => {
 
 afterAll(async () => {
   await db.disconnect();
+  restoreMockConsoleLogs(consoleLogMocks);
 });
 
 describe("GET /", () => {

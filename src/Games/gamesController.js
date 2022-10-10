@@ -37,27 +37,35 @@ const createGameHandler = async (ctx) => {
     ctx.status = 201;
   } catch (err) {
     ctx.body = {
-      message: "Game data invalid!",
-      game: null,
+      error: { message: "Game data invalid!" },
     };
     ctx.status = 400;
   }
 };
 
 const updateGameByIdHandler = async (ctx) => {
-  const updatedGame = await updateGameById(ctx.params.id, ctx.request.body);
-  ctx.status = updatedGame ? 200 : 404;
-  ctx.body = {
-    message: "Game Updated!",
-    game: updatedGame,
-  };
+  const id = ctx.params.id;
+  try {
+    const updatedGame = await updateGameById(id, ctx.request.body);
+    ctx.status = updatedGame ? 200 : 404;
+    ctx.body = {
+      message: `Game "${id}" ${updatedGame ? "updated" : "not found"}!`,
+      game: updatedGame,
+    };
+  } catch (err) {
+    ctx.body = {
+      error: { message: "Game data invalid!" },
+    };
+    ctx.status = 400;
+  }
 };
 
 const deleteGameHandler = async (ctx) => {
-  const deletedGame = await deleteGameById(ctx.params.id);
+  const id = ctx.params.id;
+  const deletedGame = await deleteGameById(id);
   ctx.status = deletedGame ? 200 : 404;
   ctx.body = {
-    message: deletedGame ? "Game Deleted!" : "Game not found...",
+    message: `Game "${id}" ${deletedGame ? "deleted" : "not found"}!`,
     game: deletedGame,
   };
 };

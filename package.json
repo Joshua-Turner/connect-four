@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "eslint",
     "format": "prettier --write .",
     "prepare": "husky install",
