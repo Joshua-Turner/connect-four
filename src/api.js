@@ -11,7 +11,7 @@ api
   .use(cors())
   .use(logger())
   .on("error", (err, ctx) => {
-    console.error("server error", err, ctx);
+    console.error("❌ SERVER ERROR:", err, ctx);
   })
   .use(indexRouter.routes())
   .use(indexRouter.allowedMethods())

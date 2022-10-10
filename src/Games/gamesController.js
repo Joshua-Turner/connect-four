@@ -13,8 +13,13 @@ const getGamesHandler = async (ctx) => {
 };
 
 const getGameByIdHandler = async (ctx) => {
-  ctx.body = await getGameById(ctx.params.id);
-  ctx.status = 200;
+  const id = ctx.params.id;
+  const game = await getGameById(id);
+  ctx.body = {
+    message: `Game "${id}" ${game ? "" : "not "}found!`,
+    game,
+  };
+  ctx.status = game ? 200 : 404;
 };
 
 const getGamesCountHandler = async (ctx) => {
@@ -23,12 +28,20 @@ const getGamesCountHandler = async (ctx) => {
 };
 
 const createGameHandler = async (ctx) => {
-  const game = await createGame(ctx.request.body);
-  ctx.body = {
-    message: "Game Created!",
-    game,
-  };
-  ctx.status = 201;
+  try {
+    const game = await createGame(ctx.request.body);
+    ctx.body = {
+      message: "Game created!",
+      game,
+    };
+    ctx.status = 201;
+  } catch (err) {
+    ctx.body = {
+      message: "Game data invalid!",
+      game: null,
+    };
+    ctx.status = 400;
+  }
 };
 
 const updateGameByIdHandler = async (ctx) => {
