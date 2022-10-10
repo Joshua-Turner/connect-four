@@ -40,6 +40,7 @@ const createGameHandler = async (ctx) => {
       error: { message: "Game data invalid!" },
     };
     ctx.status = 400;
+    ctx.app.emit("error", err, ctx);
   }
 };
 
@@ -57,6 +58,7 @@ const updateGameByIdHandler = async (ctx) => {
       error: { message: "Game data invalid!" },
     };
     ctx.status = 400;
+    ctx.app.emit("error", err, ctx);
   }
 };
 

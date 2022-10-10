@@ -50,7 +50,7 @@
       "/node_modules/",
       "/build/",
       "/coverage/",
-      "dbTest"
+      "/utils/tests/"
     ],
     "coverageThreshold": {
       "global": {
