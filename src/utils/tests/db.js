@@ -14,21 +14,25 @@ const connect = async () => {
 };
 
 const clear = async () => {
-  const collections = mongoose.connection.collections;
-  for (const key in collections) {
-    const collection = collections[key];
-    await collection.deleteMany();
+  if (mongoServer) {
+    const collections = mongoose.connection.collections;
+    for (const key in collections) {
+      const collection = collections[key];
+      await collection.deleteMany();
+    }
   }
 };
 
 const disconnect = async () => {
-  await mongoose.connection.dropDatabase();
-  await mongoose.connection.close();
-  await mongoServer.stop();
+  if (mongoServer) {
+    await mongoose.connection.dropDatabase();
+    await mongoose.connection.close();
+    await mongoServer.stop();
+  }
 };
 
 module.exports = {
-  connect,
   clear,
+  connect,
   disconnect,
 };

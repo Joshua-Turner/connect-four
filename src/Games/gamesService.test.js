@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const db = require("../testDB");
+const db = require("../utils/tests/db");
 const {
   createGame,
   getGameById,
@@ -7,7 +7,7 @@ const {
   getGamesCount,
   updateGameById,
   deleteGameById,
-} = require("./GameService");
+} = require("./gamesService");
 
 const exampleGame = {
   player1Name: "Reddington",
