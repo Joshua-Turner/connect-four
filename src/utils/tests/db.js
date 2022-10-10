@@ -32,7 +32,7 @@ const disconnect = async () => {
 };
 
 module.exports = {
-  connect,
   clear,
+  connect,
   disconnect,
 };

@@ -1,6 +1,6 @@
 require("dotenv").config();
-require("./db/db")();
-const api = require("./api/api");
+require("./db")();
+const api = require("./api");
 const PORT = process.env.PORT || 3000;
 
 api.listen(PORT, () => {

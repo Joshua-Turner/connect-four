@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { getGamesCount } = require("./Game/GameService");
+const { getGamesCount } = require("./Games/gamesService");
 
 module.exports = () =>
   mongoose
