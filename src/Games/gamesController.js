@@ -23,7 +23,11 @@ const getGameByIdHandler = async (ctx) => {
 };
 
 const getGamesCountHandler = async (ctx) => {
-  ctx.body = await getGamesCount();
+  const count = await getGamesCount();
+  ctx.body = {
+    message: `There are "${count}" games!`,
+    count,
+  };
   ctx.status = 200;
 };
 

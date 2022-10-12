@@ -1,12 +1,10 @@
 const Koa = require("koa");
-const { koaSwagger } = require("koa2-swagger-ui");
 const parser = require("koa-bodyparser");
 const cors = require("@koa/cors");
 const logger = require("koa-logger");
 const indexRouter = require("./indexRouter");
 const gamesRouter = require("./Games/gamesRouter");
 const api = new Koa();
-const spec = require("../swagger.json");
 
 api
   .use(parser())
@@ -18,8 +16,12 @@ api
   .use(indexRouter.routes())
   .use(indexRouter.allowedMethods())
   .use(gamesRouter.routes())
-  .use(gamesRouter.allowedMethods())
-  .use(
+  .use(gamesRouter.allowedMethods());
+
+if (process.env.NODE_ENV !== "production") {
+  const { koaSwagger } = require("koa2-swagger-ui");
+  const spec = require("../swagger.json");
+  api.use(
     koaSwagger({
       routePrefix: "/swagger",
       swaggerOptions: {
@@ -28,5 +30,6 @@ api
       },
     })
   );
+}
 
 module.exports = api;
