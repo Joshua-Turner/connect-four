@@ -18,6 +18,18 @@ api
   .use(gamesRouter.routes())
   .use(gamesRouter.allowedMethods());
 
-// add swagger ui koa
+if (process.env.NODE_ENV !== "production") {
+  const { koaSwagger } = require("koa2-swagger-ui");
+  const spec = require("../swagger.json");
+  api.use(
+    koaSwagger({
+      routePrefix: "/swagger",
+      swaggerOptions: {
+        spec,
+        jsonEditor: true,
+      },
+    })
+  );
+}
 
 module.exports = api;

@@ -77,7 +77,8 @@ describe("GET /games/count", () => {
   it("Should return length of games collection", async () => {
     const expectCount = async (expectedCount) => {
       const res = await req.get(`${baseUrl}/count`);
-      expect(res.body).toBe(expectedCount);
+      expect(res.body.message).toBe(`There are "${expectedCount}" games!`);
+      expect(res.body.count).toBe(expectedCount);
       expect(res.statusCode).toBe(200);
     };
     await expectCount(0);

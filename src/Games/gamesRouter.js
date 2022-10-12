@@ -12,8 +12,8 @@ const {
 } = require("./gamesController");
 
 gamesRouter.get("/", getGamesHandler);
-gamesRouter.get("/count", getGamesCountHandler);
 gamesRouter.post("/", createGameHandler);
+gamesRouter.get("/count", getGamesCountHandler);
 gamesRouter.get("/:id", getGameByIdHandler);
 gamesRouter.put("/:id", updateGameByIdHandler);
 gamesRouter.del("/:id", deleteGameHandler);
