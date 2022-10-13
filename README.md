@@ -1,4 +1,4 @@
-<center>
+<div align="center">
 
 # Connect Four JS
 
@@ -16,30 +16,30 @@ The initial stack was just `js`, `jest`, `eslint`, `prettier` and `husky`.
 
 The intent was to just code without overthinking the setup and structures. Then I can continually iterate on the app by adding technologies I'd like to practice with.
 
-</center>
-
 ---
 
 ## Getting started
 
-**Create `.env` file**
+### Create `.env` file
 
 Currently used for local development.
 
 Copy an example env and modify as needed.
 
-**Install dependencies:**
+### Install dependencies:
 
 `npm i`
 
-**Start the api:**
+### Start the api:
 
 `npm start`
 
-**Other scripts:**
+### Other scripts:
 
 | Script           | Description     |
 | ---------------- | --------------- |
 | `npm test`       | Runs jest tests |
 | `npm run lint`   | Runs eslint     |
 | `npm run format` | Runs prettier   |
+
+</div>
