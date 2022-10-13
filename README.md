@@ -42,4 +42,10 @@ Copy an example env and modify as needed.
 | `npm run lint`   | Runs eslint     |
 | `npm run format` | Runs prettier   |
 
+---
+
+## Swagger Docs
+
+Can access endpoint documentation by going to `http://localhost:3000/swagger` whilst the app is running.
+
 </div>
