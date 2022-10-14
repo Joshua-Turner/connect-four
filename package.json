@@ -5,16 +5,17 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "jest --coverage",
-    "lint": "eslint",
-    "format": "prettier --write .",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+    "format": "prettier --write \"src/**/*.{json,js,jsx,ts,jsx,tsx,html}\"",
     "prepare": "husky install",
-    "start": "nodemon -r dotenv/config ./src/index.js dotenv_config_path=./.env"
+    "build": "rm -rf dist && tsc && prettier --write ./dist",
+    "start": "nodemon -r dotenv/config ./src/index.ts dotenv_config_path=./.env"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "src/**/*.{js,jsx,ts,tsx}": [
       "eslint"
     ],
-    "*.{json,js,jsx,ts,jsx,tsx,html}": [
+    "src/**/*.{json,js,jsx,ts,jsx,tsx,html}": [
       "prettier --write"
     ]
   },
@@ -34,7 +35,17 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@typegoose/typegoose": "^9.12.1",
     "@types/jest": "^29.1.1",
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.8",
+    "@types/koa-logger": "^3.1.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^18.8.5",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.1.0",
@@ -44,23 +55,9 @@
     "lint-staged": "^13.0.3",
     "mongodb-memory-server": "^8.9.3",
     "prettier": "^2.7.1",
-    "supertest": "^6.3.0"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/build/",
-      "/coverage/",
-      "/utils/tests/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
+    "supertest": "^6.3.0",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   }
 }

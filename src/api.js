@@ -20,7 +20,7 @@ api
 
 if (process.env.NODE_ENV !== "production") {
   const { koaSwagger } = require("koa2-swagger-ui");
-  const spec = require("../swagger.json");
+  const spec = require("./swagger.json");
   api.use(
     koaSwagger({
       routePrefix: "/swagger",

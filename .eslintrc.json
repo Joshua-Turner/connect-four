@@ -7,11 +7,36 @@
   },
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "plugins": ["jest", "prettier"],
-  "overrides": [],
+  "overrides": [
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "settings": {
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+          "typescript": {
+            "project": "./tsconfig.json"
+          }
+        }
+      },
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "plugins": ["@typescript-eslint"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json",
+        "sourceType": "module"
+      }
+    }
+  ],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "eslint-no-use-before-defining": "off"
   }
 }
