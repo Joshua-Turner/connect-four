@@ -1,5 +1,5 @@
-import { v4 } from "uuid";
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import { v4 } from "uuid";
 
 @modelOptions({ schemaOptions: { versionKey: false } })
 class GameClass {
