@@ -1,5 +1,6 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
+import { Game } from "../../Games/Game";
 
 let mongoServer: MongoMemoryServer;
 export const connect = async (): Promise<void> => {
@@ -29,4 +30,10 @@ export const disconnect = async (): Promise<void> => {
     await mongoose.connection.close();
     await mongoServer.stop();
   }
+};
+
+export const modelToResponse = <ModelClass = Game>(
+  value: ModelClass
+): ModelClass => {
+  return JSON.parse(JSON.stringify(value));
 };

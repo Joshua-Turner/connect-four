@@ -66,9 +66,11 @@ describe("GET /games", () => {
 describe("GET /games/:id", () => {
   it("Should return matching game", async () => {
     const matchingGame = await addExampleGame();
+    assertNotNull(matchingGame);
+    const matchingGameAsResponse = db.modelToResponse(matchingGame);
     const res = await req.get(baseUrlWithId());
     expect(res.body.message).toBe(`Game "${exampleGameId}" found!`);
-    expect(matchingGame).toEqual(expect.objectContaining(res.body.game));
+    expect(matchingGameAsResponse).toEqual(res.body.game);
     expect(res.statusCode).toBe(200);
   });
 
@@ -99,8 +101,10 @@ describe("POST /games", () => {
   it("Should return created game", async () => {
     const res = await req.post(baseUrl).send({ ...exampleGame });
     const expectedGame = await getGameById(res.body.game._id);
+    assertNotNull(expectedGame);
+    const expectedGameAsResponse = db.modelToResponse(expectedGame);
     expect(res.body.message).toBe("Game created!");
-    expect(expectedGame).toEqual(expect.objectContaining(res.body.game));
+    expect(expectedGameAsResponse).toEqual(res.body.game);
     expect(res.statusCode).toBe(201);
   });
 
@@ -146,13 +150,14 @@ describe("PUT /games:id", () => {
 describe("DELETE /games/:id", () => {
   let gameToDelete: Game;
   beforeEach(async () => {
-    gameToDelete = (await addExampleGame())!;
+    gameToDelete = (await addExampleGame()) as Game;
   });
 
   it("Should delete the game", async () => {
+    const gameToDeleteAsResponse = db.modelToResponse(gameToDelete);
     const res = await req.del(baseUrlWithId());
     expect(res.body.message).toBe(`Game "${exampleGameId}" deleted!`);
-    expect(gameToDelete).toEqual(expect.objectContaining(res.body.game));
+    expect(gameToDeleteAsResponse).toEqual(res.body.game);
     expect(res.statusCode).toBe(200);
     expect(await getGamesCount()).toBe(0);
   });
