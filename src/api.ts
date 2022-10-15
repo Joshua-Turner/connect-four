@@ -7,29 +7,32 @@ import gamesRouter from "./Games/gamesRouter";
 import indexRouter from "./indexRouter";
 import spec from "./swagger.json";
 
-const api = new Koa();
-api
-  .use(parser())
-  .use(cors())
-  .use(logger())
-  .on("error", (err, ctx) => {
-    console.error("❌ SERVER ERROR:", err, ctx);
-  })
-  .use(indexRouter.routes())
-  .use(indexRouter.allowedMethods())
-  .use(gamesRouter.routes())
-  .use(gamesRouter.allowedMethods());
-
-if (process.env.NODE_ENV !== "production") {
-  api.use(
-    koaSwagger({
-      routePrefix: "/swagger",
-      swaggerOptions: {
-        spec,
-        jsonEditor: true,
-      },
+export const createApp = (): Koa => {
+  const api = new Koa();
+  api
+    .use(parser())
+    .use(cors())
+    .use(logger())
+    .on("error", (err, ctx) => {
+      console.error("❌ SERVER ERROR:", err, ctx);
     })
-  );
-}
+    .use(indexRouter.routes())
+    .use(indexRouter.allowedMethods())
+    .use(gamesRouter.routes())
+    .use(gamesRouter.allowedMethods());
 
-export default api;
+  if (process.env.NODE_ENV !== "production") {
+    api.use(
+      koaSwagger({
+        routePrefix: "/swagger",
+        swaggerOptions: {
+          spec,
+          jsonEditor: true,
+        },
+      })
+    );
+  }
+  return api;
+};
+
+export default createApp;

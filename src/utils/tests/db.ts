@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
+import { MongoMemoryServer } from "mongodb-memory-server";
+import mongoose from "mongoose";
 
-let mongoServer;
-const connect = async () => {
+let mongoServer: MongoMemoryServer;
+export const connect = async (): Promise<void> => {
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
   const mongooseOpts = {
@@ -10,29 +10,23 @@ const connect = async () => {
     useUnifiedTopology: true,
   };
 
-  await mongoose.connect(uri, mongooseOpts);
+  await mongoose.connect(uri, mongooseOpts as mongoose.ConnectOptions);
 };
 
-const clear = async () => {
+export const clear = async (): Promise<void> => {
   if (mongoServer) {
     const collections = mongoose.connection.collections;
     for (const key in collections) {
       const collection = collections[key];
-      await collection.deleteMany();
+      await collection.deleteMany({});
     }
   }
 };
 
-const disconnect = async () => {
+export const disconnect = async (): Promise<void> => {
   if (mongoServer) {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
     await mongoServer.stop();
   }
-};
-
-module.exports = {
-  clear,
-  connect,
-  disconnect,
 };

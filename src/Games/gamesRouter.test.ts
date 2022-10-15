@@ -1,13 +1,18 @@
-const {
+import { assertNotNull } from "../utils/tests/assert";
+import {
+  ConsoleLogMocks,
   getConsoleLogMocks,
   restoreMockConsoleLogs,
-} = require("../utils/tests/mock");
-const { db, req } = require("../utils/tests/server");
-const { createGame, getGamesCount, getGameById } = require("./gamesService");
+} from "../utils/tests/consoleMocks";
+import { db, getRequest, SuperTestRequest } from "../utils/tests/server";
+import { Game } from "./Game";
+import { createGame, getGameById, getGamesCount } from "./gamesService";
 
-let consoleLogMocks;
+let consoleLogMocks: ConsoleLogMocks;
+let req: SuperTestRequest;
 beforeAll(async () => {
   consoleLogMocks = getConsoleLogMocks();
+  req = getRequest();
   await db.connect();
 });
 
@@ -26,15 +31,17 @@ const exampleGame = {
   player2Name: "Yellowanna",
 };
 
-const addExampleGame = async (id = exampleGameId) => {
+const addExampleGame = async (
+  id: string = exampleGameId
+): Promise<Game | null> => {
   return await createGame({
     ...exampleGame,
     _id: id,
-  });
+  } as Game);
 };
 
 const baseUrl = "/games";
-const baseUrlWithId = (id = exampleGameId) => {
+const baseUrlWithId = (id: string = exampleGameId): string => {
   return `${baseUrl}/${id}`;
 };
 
@@ -75,7 +82,7 @@ describe("GET /games/:id", () => {
 
 describe("GET /games/count", () => {
   it("Should return length of games collection", async () => {
-    const expectCount = async (expectedCount) => {
+    const expectCount = async (expectedCount: number): Promise<void> => {
       const res = await req.get(`${baseUrl}/count`);
       expect(res.body.message).toBe(`There are "${expectedCount}" games!`);
       expect(res.body.count).toBe(expectedCount);
@@ -107,16 +114,18 @@ describe("POST /games", () => {
 describe("PUT /games:id", () => {
   it("Should return updated game", async () => {
     const originalGame = await addExampleGame();
+    assertNotNull(originalGame);
     const updatedPlayer1Name = "Blueton";
     const res = await req
       .put(baseUrlWithId())
       .send({ player1Name: updatedPlayer1Name });
     const updatedGame = await getGameById(originalGame._id);
-
+    assertNotNull(updatedGame);
     expect(res.body.message).toBe(`Game "${exampleGameId}" updated!`);
-    expect(res.body.game?.player1Name).toBe(updatedPlayer1Name);
+    assertNotNull(res.body.game);
+    expect(res.body.game.player1Name).toBe(updatedPlayer1Name);
     expect(originalGame.player1Name).not.toBe(updatedPlayer1Name);
-    expect(updatedGame?.player1Name).toBe(updatedPlayer1Name);
+    expect(updatedGame.player1Name).toBe(updatedPlayer1Name);
     expect(res.statusCode).toBe(200);
   });
 
@@ -135,9 +144,9 @@ describe("PUT /games:id", () => {
 });
 
 describe("DELETE /games/:id", () => {
-  let gameToDelete;
+  let gameToDelete: Game;
   beforeEach(async () => {
-    gameToDelete = await addExampleGame();
+    gameToDelete = (await addExampleGame())!;
   });
 
   it("Should delete the game", async () => {

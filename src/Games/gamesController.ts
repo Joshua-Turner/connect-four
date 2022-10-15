@@ -1,18 +1,20 @@
-const {
+import Koa from "koa";
+import { Game } from "./Game";
+import {
   createGame,
+  deleteGameById,
   getGameById,
   getGames,
   getGamesCount,
   updateGameById,
-  deleteGameById,
-} = require("./gamesService");
+} from "./gamesService";
 
-const getGamesHandler = async (ctx) => {
+export const getGamesHandler: Koa.Middleware = async (ctx) => {
   ctx.body = await getGames();
   ctx.status = 200;
 };
 
-const getGameByIdHandler = async (ctx) => {
+export const getGameByIdHandler: Koa.Middleware = async (ctx) => {
   const id = ctx.params.id;
   const game = await getGameById(id);
   ctx.body = {
@@ -22,7 +24,7 @@ const getGameByIdHandler = async (ctx) => {
   ctx.status = game ? 200 : 404;
 };
 
-const getGamesCountHandler = async (ctx) => {
+export const getGamesCountHandler: Koa.Middleware = async (ctx) => {
   const count = await getGamesCount();
   ctx.body = {
     message: `There are "${count}" games!`,
@@ -31,9 +33,9 @@ const getGamesCountHandler = async (ctx) => {
   ctx.status = 200;
 };
 
-const createGameHandler = async (ctx) => {
+export const createGameHandler: Koa.Middleware = async (ctx) => {
   try {
-    const game = await createGame(ctx.request.body);
+    const game = await createGame(ctx.request.body as unknown as Game);
     ctx.body = {
       message: "Game created!",
       game,
@@ -48,10 +50,13 @@ const createGameHandler = async (ctx) => {
   }
 };
 
-const updateGameByIdHandler = async (ctx) => {
+export const updateGameByIdHandler: Koa.Middleware = async (ctx) => {
   const id = ctx.params.id;
   try {
-    const updatedGame = await updateGameById(id, ctx.request.body);
+    const updatedGame = await updateGameById(
+      id,
+      ctx.request.body as Partial<Game>
+    );
     ctx.status = updatedGame ? 200 : 404;
     ctx.body = {
       message: `Game "${id}" ${updatedGame ? "updated" : "not found"}!`,
@@ -66,7 +71,7 @@ const updateGameByIdHandler = async (ctx) => {
   }
 };
 
-const deleteGameHandler = async (ctx) => {
+export const deleteGameHandler: Koa.Middleware = async (ctx) => {
   const id = ctx.params.id;
   const deletedGame = await deleteGameById(id);
   ctx.status = deletedGame ? 200 : 404;
@@ -74,13 +79,4 @@ const deleteGameHandler = async (ctx) => {
     message: `Game "${id}" ${deletedGame ? "deleted" : "not found"}!`,
     game: deletedGame,
   };
-};
-
-module.exports = {
-  createGameHandler,
-  getGamesCountHandler,
-  getGameByIdHandler,
-  getGamesHandler,
-  updateGameByIdHandler,
-  deleteGameHandler,
 };

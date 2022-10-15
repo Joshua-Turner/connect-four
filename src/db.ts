@@ -1,7 +1,7 @@
 import { mongoose } from "@typegoose/typegoose";
 import { getGamesCount } from "./Games/gamesService";
 
-const db = () => {
+const db = (): void => {
   if (process.env.DB_URL) {
     mongoose
       .connect(process.env.DB_URL, { dbName: "connectfour" })

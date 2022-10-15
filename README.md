@@ -32,7 +32,14 @@ Copy an example env and modify as needed.
 
 ### Start the api:
 
+**Runs app from `src`**
 `npm start`
+
+**Alias for `npm start`**
+`npm start:dev`
+
+**Builds app and runs from `dist`**
+`npm run start:build`
 
 ### Other scripts:
 
@@ -41,6 +48,7 @@ Copy an example env and modify as needed.
 | `npm test`       | Runs jest tests |
 | `npm run lint`   | Runs eslint     |
 | `npm run format` | Runs prettier   |
+| `npm run build`  | Compiles app    |
 
 ---
 
