@@ -5,10 +5,11 @@ import {
   prop,
   Severity,
 } from "@typegoose/typegoose";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { v4 } from "uuid";
 
 @modelOptions({ schemaOptions: { versionKey: false } })
-export class Game {
+export class Game extends TimeStamps {
   @prop({ default: () => v4() }) public _id!: string;
   @prop({ default: "Red", trim: true })
   public player1Name!: string;
