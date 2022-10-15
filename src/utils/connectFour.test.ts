@@ -1,4 +1,4 @@
-const C4 = require("./connectFour");
+import C4, { PlayerIndex } from "./connectFour";
 
 const ROW_COUNT = 6;
 const COLUMN_COUNT = 7;
@@ -6,12 +6,12 @@ const DEFAULT_PLAYER_1_NAME = "RED";
 const DEFAULT_PLAYER_2_NAME = "YELLOW";
 const PLAYER_1_INDEX = 0;
 const PLAYER_2_INDEX = 1;
-let game;
+let game: C4;
 beforeEach(() => {
   game = new C4();
 });
 
-const setRowWin = (playerIndex, rowIndex = 0) => {
+const setRowWin = (playerIndex: PlayerIndex, rowIndex = 0): void => {
   game.currentPlayer = playerIndex;
   game.setCellState(rowIndex, 0, playerIndex);
   game.setCellState(rowIndex, 1, playerIndex);
@@ -19,7 +19,7 @@ const setRowWin = (playerIndex, rowIndex = 0) => {
   game.setCellState(rowIndex, 3, playerIndex);
 };
 
-const setColumnWin = (playerIndex, columnIndex = 0) => {
+const setColumnWin = (playerIndex: PlayerIndex, columnIndex = 0): void => {
   game.currentPlayer = playerIndex;
   game.setCellState(0, columnIndex, playerIndex);
   game.setCellState(1, columnIndex, playerIndex);
@@ -27,7 +27,7 @@ const setColumnWin = (playerIndex, columnIndex = 0) => {
   game.setCellState(3, columnIndex, playerIndex);
 };
 
-const setDiagonalUpWin = (playerIndex) => {
+const setDiagonalUpWin = (playerIndex: PlayerIndex): void => {
   game.currentPlayer = playerIndex;
   game.setCellState(0, 0, playerIndex);
   game.setCellState(1, 1, playerIndex);
@@ -35,7 +35,7 @@ const setDiagonalUpWin = (playerIndex) => {
   game.setCellState(3, 3, playerIndex);
 };
 
-const setDiagonalDownWin = (playerIndex) => {
+const setDiagonalDownWin = (playerIndex: PlayerIndex): void => {
   game.currentPlayer = playerIndex;
   game.setCellState(5, 0, playerIndex);
   game.setCellState(4, 1, playerIndex);
@@ -97,15 +97,6 @@ describe("getPlayer", () => {
     expect(game.getPlayer(PLAYER_1_INDEX)).toBe(DEFAULT_PLAYER_1_NAME);
     expect(game.getPlayer(PLAYER_2_INDEX)).toBe(DEFAULT_PLAYER_2_NAME);
   });
-
-  it("Should throw a TypeError if passed player index is not a number equal to 0 or 1", () => {
-    expect(() => game.getPlayer("1")).toThrow(TypeError);
-    expect(() => game.getPlayer("other")).toThrow(TypeError);
-    expect(() => game.getPlayer([])).toThrow(TypeError);
-    expect(() => game.getPlayer({})).toThrow(TypeError);
-    expect(() => game.getPlayer(-1)).toThrow(TypeError);
-    expect(() => game.getPlayer(2)).toThrow(TypeError);
-  });
 });
 
 describe("getCellState", () => {
@@ -152,7 +143,6 @@ describe("takeTurn", () => {
 
   it("Should not change player or fill highest cell if the column is full", () => {
     const columnIndex = 0;
-    // Fills column 0
     for (let i = 0; i < ROW_COUNT; i++) {
       game.takeTurn(columnIndex);
     }

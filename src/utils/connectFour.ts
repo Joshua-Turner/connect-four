@@ -1,4 +1,26 @@
-class C4 {
+export type GameCell = number | undefined;
+export type GameRow = [
+  GameCell,
+  GameCell,
+  GameCell,
+  GameCell,
+  GameCell,
+  GameCell,
+  GameCell
+];
+export type GameState = [GameRow, GameRow, GameRow, GameRow, GameRow, GameRow];
+export type PlayerIndex = 0 | 1;
+
+export default class C4 {
+  public currentPlayer: PlayerIndex;
+  public players: [string, string];
+  public winner: PlayerIndex | undefined;
+  public rowCount: number;
+  public columnCount: number;
+  public lastRowIndex: number;
+  public lastColumnIndex: number;
+  public gameState: GameState;
+
   constructor(player1 = "RED", player2 = "YELLOW") {
     this.currentPlayer = 0;
     this.players = [player1, player2];
@@ -10,42 +32,39 @@ class C4 {
     this.gameState = this.createGameState();
   }
 
-  changePlayer() {
+  changePlayer(): void {
     this.currentPlayer = this.currentPlayer ? 0 : 1;
   }
 
-  createGameRow() {
+  createGameRow(): GameRow {
     const gameRow = [];
     for (let i = 0; i < this.columnCount; i++) {
       gameRow.push(undefined);
     }
-    return gameRow;
+    return gameRow as GameRow;
   }
 
-  createGameState() {
+  createGameState(): GameState {
     const gameState = [];
     for (let i = 0; i < this.rowCount; i++) {
       gameState.push(this.createGameRow());
     }
-    return gameState;
+    return gameState as GameState;
   }
 
-  getPlayer(playerIndex) {
-    if (typeof playerIndex !== "number" || ![0, 1].includes(playerIndex)) {
-      throw new TypeError("playerIndex must be a number equal to 0 or 1");
-    }
+  getPlayer(playerIndex: PlayerIndex): string {
     return this.players[playerIndex];
   }
 
-  getCellState(rowIndex, columnIndex) {
+  getCellState(rowIndex: number, columnIndex: number): GameCell {
     return this.gameState[rowIndex][columnIndex];
   }
 
-  setCellState(rowIndex, columnIndex, value) {
+  setCellState(rowIndex: number, columnIndex: number, value: GameCell): void {
     this.gameState[rowIndex][columnIndex] = value;
   }
 
-  checkRowWin(rowIndex) {
+  checkRowWin(rowIndex: number): boolean {
     let currentCellState = undefined;
     let matchCount = 0;
     for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
@@ -66,7 +85,7 @@ class C4 {
     return false;
   }
 
-  checkColumnWin(columnIndex) {
+  checkColumnWin(columnIndex: number): boolean {
     let matchCount = 0;
     let currentCellState = undefined;
     for (let rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
@@ -87,7 +106,7 @@ class C4 {
     return false;
   }
 
-  checkUpDiagonalWin(rowIndex, columnIndex) {
+  checkUpDiagonalWin(rowIndex: number, columnIndex: number): boolean {
     const startCell = [rowIndex, columnIndex];
     while (startCell[0] - 1 >= 0 && startCell[1] - 1 >= 0) {
       startCell[0]--;
@@ -119,7 +138,7 @@ class C4 {
     return false;
   }
 
-  checkDownDiagonalWin(rowIndex, columnIndex) {
+  checkDownDiagonalWin(rowIndex: number, columnIndex: number): boolean {
     let matches = 0;
     let currentCellState = undefined;
     const startCell = [rowIndex, columnIndex];
@@ -148,14 +167,14 @@ class C4 {
     return false;
   }
 
-  checkDiagonalWin(rowIndex, columnIndex) {
+  checkDiagonalWin(rowIndex: number, columnIndex: number): boolean {
     return (
       this.checkUpDiagonalWin(rowIndex, columnIndex) ||
       this.checkDownDiagonalWin(rowIndex, columnIndex)
     );
   }
 
-  checkWin(rowIndex, columnIndex) {
+  checkWin(rowIndex: number, columnIndex: number): void {
     if (
       this.checkRowWin(rowIndex) ||
       this.checkColumnWin(columnIndex) ||
@@ -166,12 +185,12 @@ class C4 {
     }
   }
 
-  setWinner() {
+  setWinner(): void {
     this.winner = this.currentPlayer;
     console.log(`Congratulations! '${this.getPlayer(this.winner)}' won!`);
   }
 
-  takeTurn(columnIndex) {
+  takeTurn(columnIndex: number): void {
     if (this.winner !== undefined) {
       console.log(`Game Over! '${this.getPlayer(this.winner)}' won!`);
       return;
@@ -188,11 +207,9 @@ class C4 {
     }
   }
 
-  reset() {
+  reset(): void {
     this.winner = undefined;
     this.currentPlayer = 0;
     this.gameState = this.createGameState();
   }
 }
-
-module.exports = C4;

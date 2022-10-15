@@ -1,6 +1,6 @@
-const Router = require("koa-router");
-const indexRouter = new Router();
+import Router from "koa-router";
 
+const indexRouter = new Router();
 indexRouter.get("/", (ctx) => {
   ctx.body = {
     status: "Connect Four JS Running!",
@@ -8,4 +8,4 @@ indexRouter.get("/", (ctx) => {
   ctx.status = 200;
 });
 
-module.exports = indexRouter;
+export default indexRouter;

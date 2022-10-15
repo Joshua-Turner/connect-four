@@ -1,0 +1,23 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "roots": ["<rootDir>/src"],
+  "setupFiles": ["dotenv/config"],
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "/dist/",
+    "/coverage/",
+    "/utils/tests/"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    }
+  }
+}

@@ -1,19 +1,15 @@
-let getConsoleLogMocks;
-let restoreMockConsoleLogs;
-let db;
-let req;
-jest.isolateModules(() => {
-  const mock = require("./utils/tests/mock");
-  getConsoleLogMocks = mock.getConsoleLogMocks;
-  restoreMockConsoleLogs = mock.restoreMockConsoleLogs;
-  const server = require("./utils/tests/server");
-  db = server.db;
-  req = server.req;
-});
+import {
+  ConsoleLogMocks,
+  getConsoleLogMocks,
+  restoreMockConsoleLogs,
+} from "./utils/tests/consoleMocks";
+import { db, getRequest, SuperTestRequest } from "./utils/tests/server";
 
-let consoleLogMocks;
+let consoleLogMocks: ConsoleLogMocks;
+let req: SuperTestRequest;
 beforeAll(async () => {
   consoleLogMocks = getConsoleLogMocks();
+  req = getRequest();
   await db.connect();
 });
 
@@ -55,7 +51,7 @@ describe("GET /swagger", () => {
 
   it('Should not connect if the NODE_ENV is "production"', async () => {
     process.env.NODE_ENV = "production";
-    const { req: req2 } = require("./utils/tests/server");
+    const req2 = getRequest();
     const res = await req2.get("/swagger");
     expect(res.statusCode).toBe(404);
   });
