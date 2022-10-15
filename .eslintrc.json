@@ -5,47 +5,34 @@
     "es2021": true,
     "jest/globals": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-  "plugins": ["jest", "prettier"],
-  "overrides": [
-    {
-      "files": ["**/*.{ts,tsx}"],
-      "settings": {
-        "import/parsers": {
-          "@typescript-eslint/parser": [".ts", ".tsx"]
-        },
-        "import/resolver": {
-          "typescript": {
-            "project": "./tsconfig.json"
-          }
-        }
-      },
-      "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
-      ],
-      "rules": {
-        "prettier/prettier": ["error"],
-        "eslint-no-use-before-defining": "off",
-        "no-empty-function": "off",
-        "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/explicit-function-return-type": "error",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/no-explicit-any": "off"
-      },
-      "plugins": ["@typescript-eslint"],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "project": "./tsconfig.json",
-        "sourceType": "module"
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["jest", "prettier", "@typescript-eslint"],
+  "files": ["**/*.{ts,tsx}"],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
       }
     }
-  ],
+  },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "project": "./tsconfig.json",
+    "sourceType": "module"
   },
   "rules": {
     "prettier/prettier": ["error"],
-    "eslint-no-use-before-defining": "off"
+    "eslint-no-use-before-defining": "off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-function-return-type": "warn"
   }
 }

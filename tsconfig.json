@@ -7,7 +7,6 @@
     "rootDir": "./src",
     "moduleResolution": "node",
     "types": ["jest", "node"],
-    "allowJs": true,
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
