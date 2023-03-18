@@ -10,8 +10,8 @@
     "prepare": "husky install",
     "build": "rm -rf dist && tsc && prettier --write ./dist",
     "start": "nodemon -r dotenv/config ./src/index.ts dotenv_config_path=./.env",
-    "start:dev": "npm run start",
-    "start:build": "npm run build && nodemon -r dotenv/config ./dist/index.js dotenv_config_path=./.env"
+    "start:dev": "yarn start",
+    "start:build": "yarn build && nodemon -r dotenv/config ./dist/index.js dotenv_config_path=./.env"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
